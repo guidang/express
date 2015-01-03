@@ -11,6 +11,13 @@
 ### 演示请关注易信: fshare ###   
 ![演示](screenshot/sc1.png) ![演示](screenshot/sc2.png) ![演示](screenshot/sc3.png)   
 
+
+### 可删除的文件 ###
+- add_companies.php   后期需要扩展的其它快递公司文件
+- company_dat.php     将dat的sqlite格式的快递数据提取出来(已完成)
+- data.dat            快递公司数据，Sqlite格式
+
+注：此快递查询是建立在之前的快递查询的基础之上的。
 =============
 作者QQ：1005043848
 易信/ 微信: Skiychan
