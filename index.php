@@ -1,17 +1,23 @@
 <?php
 /**
- * 	微信公众平台基础类 For Fshare
- * 	@author:	Skiychan
- * 	@contact:	QQ:1005043848
- * 	@website:	www.zzzzy.com
- * 	@created:	2013.11.19
+ *
+ * @created:  Skiychan.
+ * @date:  1/3/15
+ * @modified:
  */
 
+//include_once "get_companies.php";
+
+//$company = new company();
+
+if (!isset($GLOBALS["HTTP_RAW_POST_DATA"]))
+    die(json_encode(array("code" => 300, "status" => "数据请求错误")));
+
 include_once 'class.base.php';
-
 define('TOKEN', 'fshare');
+$ch = new BaseClass();
 
-$wx = new Wechat();
+// 验证,成功后必须注释
+//$ch->valid();
+$ch->responseMsg();
 
-//$wx->valid();
-$wx->responseMsg();
