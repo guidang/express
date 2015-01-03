@@ -9,7 +9,7 @@
 比如易客满(美国亚马逊海淘至中国使用的快递) 
 
 ### 演示请关注易信: fshare ###   
-![演示](screenshot/sc1.png) ![演示](screenshot/sc1.png) ![演示](screenshot/sc1.png)   
+![演示](screenshot/sc1.png) ![演示](screenshot/sc2.png) ![演示](screenshot/sc3.png)   
 
 =============
 作者QQ：1005043848
