@@ -7,5 +7,5 @@
  */
 
 return array(
-    array('code' => 'ecms','company' => '易客满')
+    array('code' => 'ecms', 'company' => '易客满')
 );

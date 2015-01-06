@@ -1,17 +1,19 @@
 <?php
+
 /**
  * 快递公司的class
  * @created:  Skiychan.
  * @date:  1/3/15
  * @modified:
  */
-
-class company {
+class company
+{
     public static $file_name = "company_lists.php";
 
     public static $companies;
 
-    public function __construct() {
+    public function __construct()
+    {
 
         self::$companies = $this->get_companies();
     }
@@ -19,7 +21,8 @@ class company {
     /*
      * return array companies infos
      */
-    public static function get_companies() {
+    public static function get_companies()
+    {
         return include_once self::$file_name;
     }
 
@@ -28,7 +31,8 @@ class company {
      * @param string $code 编码
      * return string 公司名
      */
-    public static function get_company_name($code) {
+    public static function get_company_name($code)
+    {
         foreach (self::$companies as $keys => $values) {
             if ($values['code'] == $code) {
                 return $values['company'];
@@ -42,7 +46,8 @@ class company {
      * $param string $name 公司名
      * return string 编码
      */
-    public static function get_company_code($name) {
+    public static function get_company_code($name)
+    {
         foreach (self::$companies as $keys => $values) {
             if ($values['name'] == $name) {
                 return $values['code'];
@@ -56,7 +61,8 @@ class company {
      * $param string $name 公司名
      * return array 编码和公司名
      */
-    public static function get_companies_info($name) {
+    public static function get_companies_info($name)
+    {
         $lists = array();
         foreach (self::$companies as $keys => $values) {
             if (mb_stristr($values['company'], $name)) {
@@ -72,9 +78,10 @@ class company {
      * @param string 编码或者公司名
      * return array 编码和公司名
      */
-    public static function get_company_info($input) {
+    public static function get_company_info($input)
+    {
         foreach (self::$companies as $keys => $values) {
-            if (in_array($input,$values)) {
+            if (in_array($input, $values)) {
                 unset($values["id"]);
                 return $values;
             }
