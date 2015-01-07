@@ -87,12 +87,24 @@ class BaseClass
                 $company = new company();
                 $company_infos = $company::get_companies_info($content_list[0]);
 
+                //如果快递100不支持此快递则diy
+                if(count($company_infos) == 0) {
+                    $is_diy = true;
+                    $company::$companies = include_once 'fetch/add_companies.php';
+                    $company_infos = $company::get_companies_info($content_list[0]);
+                }
                 $num = $content_list[1];
                 $code = $company_infos[0]['code'];        //获取英文代码
                 $com = $company_infos[0]['company'];        //获取公司名称
 
                 $numinfo = "快递:" . $com . "\n" . "单号:" . $num . "\n";
-                $kd_url = "http://m.kuaidi100.com/query?type=" . $code . "&postid=" . $num;
+                
+                if(!$is_diy) {
+                    $kd_url = "http://m.kuaidi100.com/query?type=" . $code . "&postid=" . $num;
+                } else {
+                    $kd_url = dirname('http://'.$_SERVER['SERVER_NAME'].$_SERVER["REQUEST_URI"]).'/fetch/index.php?code='.$code."&postid=" . $num;
+                }
+
                 $json_getdata = file_get_contents($kd_url);
                 //$get_kdinfo = json_decode($json_getdata);	//object
                 $get_kdinfo = json_decode($json_getdata, true);    //array
@@ -118,7 +130,7 @@ class BaseClass
                 if ($ship) {
                     $contentStr = $get_kdinfo;
                 } else {
-                    $contentStr = $numinfo . ">没有物流数据！";
+                    $contentStr = $numinfo . ">没有物流数据！".$kd_url;
                 }
 
                 $contentStr .= $detail;

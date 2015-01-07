@@ -2,8 +2,8 @@
 
 /**
  * 快递公司的class
- * @created:  Skiychan.
- * @date:  1/3/15
+ * @author:  Skiychan.
+ * @created:  1/3/15
  * @modified:
  */
 class company
@@ -57,17 +57,27 @@ class company
     }
 
     /*
-     * 通过快递公司名取得编码 模糊查找全部
-     * $param string $name 公司名
+     * 通过快递公司名或者编码取得完整编码 模糊查找全部
+     * $param string $input 公司名
      * return array 编码和公司名
      */
-    public static function get_companies_info($name)
+    public static function get_companies_info($input)
     {
         $lists = array();
         foreach (self::$companies as $keys => $values) {
-            if (mb_stristr($values['company'], $name)) {
+            if (mb_stristr($values['company'], $input)) {
                 unset($values['id']);
                 $lists[] = $values;
+            }
+        }
+
+        //如果通过名称取不到值则通过键名
+        if (count($lists) == 0) {
+            foreach (self::$companies as $keys => $values) {
+                if (mb_stristr($values['code'], $input)) {
+                    unset($values['id']);
+                    $lists[] = $values;
+                }
             }
         }
         return $lists;
