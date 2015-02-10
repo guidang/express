@@ -92,48 +92,55 @@ class BaseClass
                     $company::$companies = include_once 'fetch/add_companies.php';
                     $company_infos = $company::get_companies_info($content_list[0]);
                 }
-                $num = $content_list[1];
-                $code = $company_infos[0]['code'];        //获取英文代码
-                $com = $company_infos[0]['company'];        //获取公司名称
-
-                $numinfo = "快递:" . $com . "\n" . "单号:" . $num . "\n";
                 
-                if(!$is_diy) {
-                    $kd_url = "http://m.kuaidi100.com/query?type=" . $code . "&postid=" . $num;
-                } else {
-                    $kd_url = dirname('http://'.$_SERVER['SERVER_NAME'].$_SERVER["REQUEST_URI"]).'/fetch/index.php?code='.$code."&postid=" . $num;
+                //有此快递公司
+                if (isset($company_infos[0])) {
+
+                    $num = $content_list[1];
+                    $code = $company_infos[0]['code'];        //获取英文代码
+                    $com = $company_infos[0]['company'];        //获取公司名称
+
+                    $numinfo = "快递:" . $com . "\n" . "单号:" . $num . "\n";
+
+                    if (!$is_diy) {
+                        $kd_url = "http://m.kuaidi100.com/query?type=" . $code . "&postid=" . $num;
+                    } else {
+                        $kd_url = dirname('http://' . $_SERVER['SERVER_NAME'] . $_SERVER["REQUEST_URI"]) . '/fetch/index.php?code=' . $code . "&postid=" . $num;
+                    }
+
+                    $json_getdata = file_get_contents($kd_url);
+                    //$get_kdinfo = json_decode($json_getdata);	//object
+                    $get_kdinfo = json_decode($json_getdata, true);    //array
+                    $last_t = "查询时间:\n" . $get_kdinfo['updatetime'] . "\n\n";    //查询时间
+
+                    $kd_shipinfo = $get_kdinfo['data'];    //快递数据数组
+                    $kd_total = count($kd_shipinfo) - 1;
+                    $ship = '';
+                    $detail = "\n<a href='http://api.oupag.com/developer/kuaidi/getdata.php?code=" . $code . "&num=" . $num . "'>点击查看详情</a>";
+
+                    //物流倒序详情
+                    for ($i = $kd_total; $i >= 0; $i--) {
+                        $shipinfo = $kd_shipinfo[$i]['time'] . "\n" . $kd_shipinfo[$i]['context'] . "\n";
+                        $ship = $shipinfo . $ship;
+                    }
+                    //顺序物流详情
+                    /*foreach ($kd_shipinfo as $v){
+                        $shipinfo = $v['time']."\n".$v['context']."\n";
+                        $ship = $shipinfo.$ship;
+                    }
+                    */
+                    $get_kdinfo = $numinfo . $last_t . "【物流详情】\n" . $ship;
+                    if ($ship) {
+                        $contentStr = $get_kdinfo;
+                    } else {
+                        $contentStr = $numinfo . ">没有物流数据！" . $kd_url;
+                    }
+
+                    $contentStr .= $detail;
+                    
+                } else {  //无此快递公司
+                    $contentStr = "无此快递公司记录.";
                 }
-
-                $json_getdata = file_get_contents($kd_url);
-                //$get_kdinfo = json_decode($json_getdata);	//object
-                $get_kdinfo = json_decode($json_getdata, true);    //array
-                $last_t = "查询时间:\n" . $get_kdinfo['updatetime'] . "\n\n";    //查询时间
-
-                $kd_shipinfo = $get_kdinfo['data'];    //快递数据数组
-                $kd_total = count($kd_shipinfo) - 1;
-                $ship = '';
-                $detail = "\n<a href='http://api.oupag.com/developer/kuaidi/getdata.php?code=" . $code . "&num=" . $num . "'>点击查看详情</a>";
-
-                //物流倒序详情
-                for ($i = $kd_total; $i >= 0; $i--) {
-                    $shipinfo = $kd_shipinfo[$i]['time'] . "\n" . $kd_shipinfo[$i]['context'] . "\n";
-                    $ship = $shipinfo . $ship;
-                }
-                //顺序物流详情
-                /*foreach ($kd_shipinfo as $v){
-                    $shipinfo = $v['time']."\n".$v['context']."\n";
-                    $ship = $shipinfo.$ship;
-                }
-                */
-                $get_kdinfo = $numinfo . $last_t . "【物流详情】\n" . $ship;
-                if ($ship) {
-                    $contentStr = $get_kdinfo;
-                } else {
-                    $contentStr = $numinfo . ">没有物流数据！".$kd_url;
-                }
-
-                $contentStr .= $detail;
-
             } else {
                 $contentStr = "格式错误,正确格式如下:\n快递公司名称 快递单号";
             }
