@@ -4,19 +4,19 @@
  *    公众平台基础类 For Fshare
  * @author:    Skiychan
  * @created:    2013.11.19
- * @modified:  2015.01.03
+ * @modified:  2015.02.10
  */
 class BaseClass
 {
 
-    /*
+
     public $token = '';
 
-    public function __construct($token){
+    public function __construct($token = NULL){
         $this->token = $token;
     }
 
-    //判断是否来自微信服务器
+    //判断是否来自微信/易信服务器
     public function valid(){
         $echoStr = $_GET["echostr"];
 
@@ -25,7 +25,6 @@ class BaseClass
             exit;
         }
     }
-    */
 
     private $toUsername;
     private $fromUsername;
