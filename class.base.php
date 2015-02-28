@@ -111,7 +111,9 @@ class BaseClass
                     $json_getdata = file_get_contents($kd_url);
                     //$get_kdinfo = json_decode($json_getdata);	//object
                     $get_kdinfo = json_decode($json_getdata, true);    //array
-                    $last_t = "查询时间:\n" . $get_kdinfo['updatetime'] . "\n\n";    //查询时间
+                    //查询时间的显示
+                    $nowtime = isset($get_kdinfo['updatetime']) ? $get_kdinfo['updatetime'] : date("Y-m-d H:i:s", time());
+                    $last_t = "查询时间:\n" . $nowtime . "\n\n";    //查询时间
 
                     $kd_shipinfo = $get_kdinfo['data'];    //快递数据数组
                     $kd_total = count($kd_shipinfo) - 1;
