@@ -133,7 +133,8 @@ class BaseClass
                     if ($ship) {
                         $contentStr = $get_kdinfo;
                     } else {
-                        $contentStr = $numinfo . ">没有物流数据！" . $kd_url;
+                        //$contentStr = $numinfo . ">没有物流数据！" . $kd_url;
+                        $contentStr = $numinfo . ">没有物流数据！";
                     }
 
                     $contentStr .= $detail;
