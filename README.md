@@ -21,8 +21,8 @@
 注：此快递查询是建立在之前的微信快递查询的基础之上的。   
 
 =============
-作者QQ：1005043848   
-易信/微信: Skiychan   
+QQ：1005043848   
+Wechat: Skiychan   
 OPCMS交流群:20625469   
-Email: developer@zzzzy.com   
-支持网站: <http://www.skiy.net> 
+Email: dev@skiy.net  
+Website: <http://www.skiy.net> 
